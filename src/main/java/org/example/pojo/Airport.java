@@ -1,4 +1,4 @@
-package pojo;
+package org.example.pojo;
 
 public class Airport {
     private String name;

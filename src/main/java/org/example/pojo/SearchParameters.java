@@ -6,20 +6,20 @@ public class SearchParameters {
     private String gl;
     private String departure_id;
     private String arrival_id;
-    private String outbound_data;
+    private String outbound_date;
     private String return_date;
     private String currency;
 
     public SearchParameters() {
     }
 
-    public SearchParameters(String engine, String hl, String gl, String departure_id, String arrival_id, String outbound_data, String return_date, String currency) {
+    public SearchParameters(String engine, String hl, String gl, String departure_id, String arrival_id, String outbound_date, String return_date, String currency) {
         this.engine = engine;
         this.hl = hl;
         this.gl = gl;
         this.departure_id = departure_id;
         this.arrival_id = arrival_id;
-        this.outbound_data = outbound_data;
+        this.outbound_date = outbound_date;
         this.return_date = return_date;
         this.currency = currency;
     }
@@ -64,12 +64,12 @@ public class SearchParameters {
         this.arrival_id = arrival_id;
     }
 
-    public String getOutbound_data() {
-        return outbound_data;
+    public String getOutbound_date() {
+        return outbound_date;
     }
 
-    public void setOutbound_data(String outbound_data) {
-        this.outbound_data = outbound_data;
+    public void setOutbound_date(String outbound_date) {
+        this.outbound_date = outbound_date;
     }
 
     public String getReturn_date() {
@@ -96,7 +96,7 @@ public class SearchParameters {
                 ", gl='" + gl + '\'' +
                 ", departure_id='" + departure_id + '\'' +
                 ", arrival_id='" + arrival_id + '\'' +
-                ", outbound_data='" + outbound_data + '\'' +
+                ", outbound_data='" + outbound_date + '\'' +
                 ", return_date='" + return_date + '\'' +
                 ", currency='" + currency + '\'' +
                 '}';

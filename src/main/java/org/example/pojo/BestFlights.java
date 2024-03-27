@@ -1,8 +1,8 @@
-package pojo;
+package org.example.pojo;
 
 import java.util.ArrayList;
 
-public class Flights {
+public class BestFlights {
     private ArrayList<Flight> flights;
     private ArrayList<Layover> layovers;
     private int total_duration;
@@ -14,10 +14,10 @@ public class Flights {
     private String departure_token;
     private String booking_token;
 
-    public Flights() {
+    public BestFlights() {
     }
 
-    public Flights(ArrayList<Flight> flights, ArrayList<Layover> layovers, int total_duration, CarbonEmission carbon_emissions, int price, String type, String airline_logo, ArrayList<String> extensions, String departure_token, String booking_token) {
+    public BestFlights(ArrayList<Flight> flights, ArrayList<Layover> layovers, int total_duration, CarbonEmission carbon_emissions, int price, String type, String airline_logo, ArrayList<String> extensions, String departure_token, String booking_token) {
         this.flights = flights;
         this.layovers = layovers;
         this.total_duration = total_duration;
@@ -112,7 +112,7 @@ public class Flights {
 
     @Override
     public String toString() {
-        return "Flights{" +
+        return "BestFlights{" +
                 "flights=" + flights +
                 ", layovers=" + layovers +
                 ", total_duration=" + total_duration +

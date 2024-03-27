@@ -1,5 +1,6 @@
 package org.example;
 
+import com.google.gson.Gson;
 import org.example.pojo.Response;
 
 import java.io.*;
@@ -10,6 +11,9 @@ import java.net.URL;
 public class Main {
     public static void main(String[] args) {
         //peticionAPI();
+        String json = leerJSON();
+        Response response = parsearJSON(json);
+        System.out.println(response);
     }
     public static void peticionAPI(){
         try {
@@ -72,16 +76,20 @@ public class Main {
         }
     }
     public static Response parsearJSON(String json){
-
+        Gson gson = new Gson();
+        return gson.fromJson(json, Response.class);
     }
     public static String leerJSON(){
-        String ruta = "./src/main/java/org/example/data/data.json";
+        String ruta = "./src/main/java/org/example/data/example.json";
         try {
             BufferedReader reader = new BufferedReader(new FileReader(ruta));
-            while(reader){
-
+            String line;
+            String result = "";
+            while((line=reader.readLine())!=null){
+                result+=line;
             }
-        } catch (FileNotFoundException e) {
+            return result;
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
