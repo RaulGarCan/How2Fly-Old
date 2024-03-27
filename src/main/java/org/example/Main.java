@@ -12,13 +12,24 @@ import java.net.HttpURLConnection;
 import java.net.PasswordAuthentication;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Base64;
 
 public class Main {
     public static void main(String[] args) {
-        //peticionAPI();
-        String json = leerJSON();
+
+        String departureId = "CDG";
+        String arrivalId = "AUS";
+        String departureDate = "2024-03-27";
+        //String returnDate = "2024-04-02";
+        String currency = "USD";
+        String type = "2"; // 1 Round (Def) | 2 OneWay
+        //peticionAPI(departureId,arrivalId,departureDate,null,currency, type);
+
+        //String rutaExample = "./src/main/java/org/example/data/example.json";
+        String rutaData = "./src/main/java/org/example/cache/data.json";
+        String json = leerJSON(rutaData);
         Response response = parsearJSON(json);
-        //System.out.println(response);
+
         ArrayList<BestFlights> bestFlights = response.getBest_flights();
         ArrayList<OtherFlights> otherFlights = response.getOther_flights();
 
@@ -26,39 +37,35 @@ public class Main {
         for(FlightDetails details : flightDetails){
             System.out.println(details);
         }
-    }
-    public static void peticionAPI(){
-        try {
-            String username = "raulgarcanmyt@gmail.com";
-            String password = "Raulius2";
-            Authenticator auth = new Authenticator() {
-                @Override
-                protected PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication(username, password.toCharArray());
-                }
-            };
 
-            String departureId = "PEK";
-            String arrivalId = "AUS";
-            String departureDate = "2024-03-27";
+    }
+    public static void peticionAPI(String departureId, String arrivalId, String departureDate, String returnDate, String currency, String type){
+        try {
+
             String engine = "google_flights";
-            String currency = "EUR";
             String api_key = "cb86689dbb1f68e6363ba7c5ecf4604177d0e21cd801037bd8e35ef77a43e271";
 
-            URL url = new URL("https://serpapi.com/search.json");
+            String link = "https://serpapi.com/search.json?engine="+engine+"&departure_id="+departureId+"&arrival_id="+arrivalId+"&gl=us&hl=en";
+            if(currency!=null && !currency.isBlank()) {
+                link += "&currency=" + currency;
+            }
+            if(type!=null && !type.isBlank()){
+                link += "&type="+type;
+            }
+            if(departureDate!=null && !departureDate.isBlank()) {
+                link += "&outbound_date=" + departureDate;
+            }
+            if(returnDate!=null && !returnDate.isBlank()) {
+                link += "&return_date=" + returnDate;
+            }
+            link+="&api_key="+api_key;
+
+            System.out.println(link);
+            URL url = new URL(link);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            //conn.setRequestMethod("GET");
-            //conn.setRequestProperty("Accept", "application/json");
-            conn.addRequestProperty("api_key", api_key);
-            conn.addRequestProperty("engine", engine);
-            conn.addRequestProperty("hl", "en");
-            conn.addRequestProperty("gl", "us");
-            conn.addRequestProperty("departure_id", departureId);
-            conn.addRequestProperty("arrival_id", arrivalId);
-            conn.addRequestProperty("outbound_date", departureDate);
-            //conn.addRequestProperty("return_date", "2024-04-02");
-            conn.addRequestProperty("currency", currency);
-            //conn.setAuthenticator(auth);
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Accept", "application/json");
+
             if (conn.getResponseCode() != 200) {
                 throw new RuntimeException("Failed : HTTP Error code : "
                         + conn.getResponseCode());
@@ -78,7 +85,7 @@ public class Main {
         }
     }
     public static void guardarJSON(String data){
-        String ruta = "./src/main/java/org/example/data/data.json";
+        String ruta = "./src/main/java/org/example/cache/data.json";
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(ruta));
             writer.write(data);
@@ -91,8 +98,7 @@ public class Main {
         Gson gson = new Gson();
         return gson.fromJson(json, Response.class);
     }
-    public static String leerJSON(){
-        String ruta = "./src/main/java/org/example/data/example.json";
+    public static String leerJSON(String ruta){
         try {
             BufferedReader reader = new BufferedReader(new FileReader(ruta));
             String line;
