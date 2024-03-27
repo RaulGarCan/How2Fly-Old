@@ -158,4 +158,18 @@ public class Flight {
                 ", often_delayed_by_over_30_min=" + often_delayed_by_over_30_min +
                 '}';
     }
+    public String shortToString(){
+        return "Flight{" +
+                "departure_airport=" + departure_airport +
+                ", arrival_airport=" + arrival_airport +
+                ", duration=" + duration +
+                ", airplane='" + airplane + '\'' +
+                ", airline='" + airline + '\'' +
+                ", airline_logo='" + airline_logo + '\'' +
+                ", travel_class='" + travel_class + '\'' +
+                ", flight_number='" + flight_number + '\'' +
+                ", overnight=" + overnight +
+                ", often_delayed_by_over_30_min=" + often_delayed_by_over_30_min +
+                '}';
+    }
 }

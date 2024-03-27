@@ -1,19 +1,31 @@
 package org.example;
 
 import com.google.gson.Gson;
+import org.example.pojo.BestFlights;
+import org.example.pojo.OtherFlights;
 import org.example.pojo.Response;
+import org.example.pojo.frontend.FlightDetails;
 
 import java.io.*;
 import java.net.Authenticator;
 import java.net.HttpURLConnection;
 import java.net.PasswordAuthentication;
 import java.net.URL;
+import java.util.ArrayList;
+
 public class Main {
     public static void main(String[] args) {
         //peticionAPI();
         String json = leerJSON();
         Response response = parsearJSON(json);
-        System.out.println(response);
+        //System.out.println(response);
+        ArrayList<BestFlights> bestFlights = response.getBest_flights();
+        ArrayList<OtherFlights> otherFlights = response.getOther_flights();
+
+        ArrayList<FlightDetails> flightDetails = getFrontEndDetails(bestFlights, otherFlights);
+        for(FlightDetails details : flightDetails){
+            System.out.println(details);
+        }
     }
     public static void peticionAPI(){
         try {
@@ -92,5 +104,15 @@ public class Main {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+    public static ArrayList<FlightDetails> getFrontEndDetails(ArrayList<BestFlights> bestFlights, ArrayList<OtherFlights> otherFlights){
+        ArrayList<FlightDetails> flightDetails = new ArrayList<>();
+        for(BestFlights flights : bestFlights){
+            flightDetails.add(new FlightDetails(flights));
+        }
+        for(OtherFlights flights : otherFlights){
+            flightDetails.add(new FlightDetails(flights));
+        }
+        return flightDetails;
     }
 }

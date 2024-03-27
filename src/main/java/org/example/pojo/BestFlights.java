@@ -125,4 +125,21 @@ public class BestFlights {
                 ", booking_token='" + booking_token + '\'' +
                 '}';
     }
+    public String shortToString() {
+        String result = "\nBestFlights{\n";
+        for(Flight flight : flights){
+            result += "\n"+flight.shortToString();
+        }
+        result+="\n";
+        for(Layover layover : layovers){
+            result += "\n"+layover.toString();
+        }
+        result += "\n\ntotal_duration=" + total_duration +
+                ", price=" + price +
+                ", airline_logo='" + airline_logo + '\'' +
+                ", departure_token='" + departure_token + '\'' +
+                ", booking_token='" + booking_token + '\'' +
+                '}'+"\n";
+        return result;
+    }
 }
